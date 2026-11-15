@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ORBITAL — Astronaut Health Monitor</title>
+<meta name="description" content="Offline-first astronaut health monitoring and decision-support prototype (NASA Space Apps Challenge student prototype).">
+<meta name="theme-color" content="#050b18">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<link rel="stylesheet" href="css/styles.css">
+<script type="importmap">
+{ "imports": { "three": "./vendor/three.module.min.js", "three/addons/": "./vendor/three-addons/" } }
+</script>
+<script src="vendor/chart.umd.js"></script>
+</head>
+<body>
+<div id="lock" class="lock hidden">
+  <div class="lock-card">
+    <div class="logo-big">ORBITAL</div>
+    <p class="muted">Local access control — enter crew PIN</p>
+    <input id="lockPin" type="password" inputmode="numeric" maxlength="8" placeholder="PIN" autocomplete="off">
+    <button id="lockBtn" class="btn primary">Unlock</button>
+    <p id="lockMsg" class="danger-text"></p>
+  </div>
+</div>
+
+<div class="app">
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <svg viewBox="0 0 64 64" class="brand-icon" aria-hidden="true"><circle cx="32" cy="32" r="10" fill="none" stroke="currentColor" stroke-width="3"/><ellipse cx="32" cy="32" rx="28" ry="11" fill="none" stroke="currentColor" stroke-width="2" transform="rotate(-25 32 32)"/><circle cx="56" cy="22" r="3.5" fill="currentColor"/></svg>
+      <div><div class="brand-name">ORBITAL</div><div class="brand-sub">Crew Health System</div></div>
+    </div>
+    <nav id="nav">
+      <a href="#/dashboard" data-page="dashboard"><span class="ni">◈</span>Dashboard</a>
+      <a href="#/camera" data-page="camera"><span class="ni">◉</span>AI Camera · ORBI</a>
+      <a href="#/body" data-page="body"><span class="ni">✦</span>Virtual Body</a>
+      <a href="#/physical" data-page="physical"><span class="ni">♥</span>Physical Health</a>
+      <a href="#/mental" data-page="mental"><span class="ni">☾</span>Mental Health</a>
+      <a href="#/emergency" data-page="emergency" class="nav-emergency"><span class="ni">✚</span>Emergency Center</a>
+      <a href="#/environment" data-page="environment"><span class="ni">☢</span>Mission Environment</a>
+      <a href="#/hazards" data-page="hazards"><span class="ni">⚠</span>Spaceflight Hazards</a>
+      <a href="#/settings" data-page="settings" class="nav-small"><span class="ni">⚙</span>Profile &amp; Data</a>
+    </nav>
+    <div class="side-foot">
+      <div id="xpBox" class="xp-box"></div>
+      <div class="disclaimer-mini">Decision-support prototype. Not a medical device. Does not diagnose.</div>
+    </div>
+  </aside>
+
+  <div class="main">
+    <header class="topbar">
+      <button id="menuBtn" class="icon-btn" aria-label="Menu">☰</button>
+      <div class="top-title"><span id="pageTitle">Dashboard</span></div>
+      <div class="top-stats">
+        <div class="ts"><span class="ts-l">Mission</span><span id="missionName" class="ts-v">—</span></div>
+        <div class="ts"><span class="ts-l">Mission day</span><span id="missionDay" class="ts-v">—</span></div>
+        <div class="ts"><span class="ts-l">Ship time (UTC)</span><span id="clock" class="ts-v mono">—</span></div>
+        <div class="ts"><span class="ts-l">Link</span><span id="netStatus" class="ts-v">—</span></div>
+      </div>
+      <a href="#/emergency" class="sos-btn" title="Emergency Center">SOS</a>
+    </header>
+    <div id="banner" class="banner hidden"></div>
+    <main id="view" tabindex="-1"></main>
+  </div>
+</div>
+
+<div id="modal" class="modal hidden" role="dialog" aria-modal="true">
+  <div class="modal-card"><button class="modal-x" id="modalX" aria-label="Close">✕</button><div id="modalBody"></div></div>
+</div>
+<div id="toasts" class="toasts"></div>
+
+<script>
+// If files from an older ORBITAL version are still cached, old and new code can't load together.
+// Detect that once, clear the old offline cache (mission data is kept) and reload.
+addEventListener('error', function (e) {
+  var m = String(e.message || '');
+  if (/does not provide an export|Failed to fetch dynamically imported module|Importing a module script failed/i.test(m)) {
+    try { if (sessionStorage.getItem('orbital.repaired')) return; sessionStorage.setItem('orbital.repaired', '1'); } catch (x) {}
+    location.replace('reset.html');
+  }
+});
+</script>
+<script type="module" src="js/app.js"></script>
+</body>
+</html>
