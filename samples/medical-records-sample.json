@@ -1,0 +1,11 @@
+{
+  "records": [
+    { "timestamp": "2026-11-12T08:00:00Z", "type": "lab", "name": "Hemoglobin", "value": 14.1, "unit": "g/dL", "refRange": "13.5–17.5" },
+    { "timestamp": "2026-11-12T08:00:00Z", "type": "lab", "name": "White blood cells", "value": 5.6, "unit": "×10⁹/L", "refRange": "4.0–11.0" },
+    { "timestamp": "2026-11-12T08:00:00Z", "type": "lab", "name": "Vitamin D (25-OH)", "value": 29, "unit": "ng/mL", "refRange": "30–100" },
+    { "timestamp": "2026-11-12T09:00:00Z", "type": "bp_sys", "value": 121 },
+    { "timestamp": "2026-11-12T09:00:00Z", "type": "bp_dia", "value": 78 },
+    { "timestamp": "2026-11-12T09:00:00Z", "type": "spo2", "value": 98 },
+    { "timestamp": "2026-11-12T09:05:00Z", "type": "body_mass", "value": 73.6 }
+  ]
+}
